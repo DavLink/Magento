@@ -1,0 +1,37 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <head>
+        <title>Compare products</title>
+        <css src="Sbmedical_Comparator::css/css.css" />
+        <script src="Sbmedical_Comparator::js/jquery.js" />
+    </head>
+
+    <body>
+      <referenceBlock name="breadcrumbs">
+              <action method="addCrumb">
+                  <argument name="crumbName" xsi:type="string">Home</argument>
+                  <argument name="crumbInfo" xsi:type="array">
+                      <item name="title" xsi:type="string">Go to Home</item>
+                      <item name="label" xsi:type="string">Home</item>
+                      <item name="link" xsi:type="string">/</item>
+                  </argument>
+              </action>
+              <action method="addCrumb">
+                  <argument name="crumbName" xsi:type="string">Compare products</argument>
+                  <argument name="crumbInfo" xsi:type="array">
+                      <item name="title" xsi:type="string">Compare products</item>
+                      <item name="label" xsi:type="string">Compare products</item>
+                  </argument>
+              </action>
+          </referenceBlock>
+        <referenceBlock name="page.main.title" remove="true" />
+
+        <referenceContainer name="content">
+            <block class="Sbmedical\Comparator\Block\Index\Index" name="comparator_index_index"
+                   template="Sbmedical_Comparator::index.phtml"/>
+        </referenceContainer>
+
+    </body>
+
+</page>

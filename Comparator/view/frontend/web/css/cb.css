@@ -1,0 +1,184 @@
+.comparator-index-index .comparator-main{
+    display: none;
+}
+.comparator-main-container{
+    width: 100%;
+    margin: auto;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+}
+.comparator-container{
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    border: solid #dcd6cb;
+    border-width: 1px 1px 0;
+    background-color: white;
+    padding-bottom: 1.5rem;
+}
+.compare-tray{
+    background: rgba(0,0,0,0);
+    border: 0;
+    display: block;
+    padding: 1.6rem;
+    outline-offset: -.5rem;
+    position: relative;
+    width: 100%;
+}
+.compare-tray:hover{
+    background-color: #f9f8f6;
+}
+.compare-title{
+    font-family: Graphik,Helvetica Neue,sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -.08px;
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    padding-right: 2.8rem;
+    text-align: left;
+}
+.remove-button-x-icon{
+    display: inline-block;
+    vertical-align: middle;
+    flex: 0 0 auto;
+    width: 2.4rem;
+    height: 2.4rem;
+    fill: #928b80;
+    transform: translateX(-50%);
+}
+.image-compared-product{
+    width: 90px;
+    height: 90px;
+    position: relative;
+    display: inline-block;
+}
+.description-compared-product{
+    width: 300px;
+    display: inline-block;
+}
+.compared-products > ul{
+    list-style: none;
+    display: flex;
+}
+.remove-button-x{
+    padding: 2rem 0 0;
+    width: 0px;
+    margin: 0px auto;
+}
+.compared-product-container,
+.image-compared-product > img{
+    margin: 0px auto;
+}
+.toggle-compare-v{
+    background: rgba(0,0,0,0);
+    border-radius: 50%;
+    cursor: pointer;
+    height: 2.4rem;
+    margin: 0;
+    outline: 0;
+    position: absolute;
+    right: 1rem;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.4rem;
+    transform: rotateX(-180deg);
+    top: 20px;
+}
+.toggle-compare-v.rotate{
+    transform: rotateX(0);
+}
+ul.cp-ul{
+    margin-bottom: 0px;
+}
+.compared-products.off, 
+.compared-product-container.off,
+.product_a.off,
+.product_b.off{
+    display: none;
+}
+.compare-page{
+    margin-top: 5px;
+}
+.compare-page-button,
+.remove-page-button{
+    width: 200px;
+    margin: 0px auto;
+    text-align: center;
+}
+.remove-page-button{
+    cursor: pointer;
+}
+
+.page-with-filter .action.primary.on{
+    padding: 2px 15px;
+}
+
+.description-compared-product{
+    text-align: center;
+}
+.price-compared-product-text{
+    font-weight: 700;
+}
+.vlad{
+    background-image: url("../images/vlad.png");
+}
+.compare-checkbox{
+    display:none;
+}
+input[type=checkbox].compare-checkbox:checked + label{
+    background-position: 0 -20px;
+}
+input[type=checkbox].compare-checkbox + label{
+    padding-left: 2rem;
+    height: 20px;
+    display: inline-block;
+    line-height: 20px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+    font-family: "FranklinGothicBookRegular";
+    font-weight: 600;
+}
+input[type=checkbox].compare-checkbox + label::after {
+    content: '';
+    background-image: url("../images/sign-out-alt-solid.svg");
+    height: 11px;
+    width: 12px;
+    margin-left: 3px;
+    opacity: 0.75;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    display: inline-block;
+  }
+.compared-product-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.container-whole-product{
+    display: flex;
+    flex-direction: row;
+}
+.compare-button-class{
+    position: relative;
+    margin: 10px 0px;
+    z-index: 1;
+}
+.page-product-grouped .box-tocart .compare-button-class{
+    display: none;
+}
+@media only screen and (max-width: 768px) {
+    .description-compared-product-text {
+        display: none;
+    }
+    .description-compared-product {
+        width: 100%;
+    }
+}

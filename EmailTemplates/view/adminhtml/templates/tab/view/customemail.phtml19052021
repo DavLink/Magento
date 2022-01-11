@@ -1,0 +1,378 @@
+<div class="fieldset-wrapper order-information" id="email-templates-container-module">
+    <?php
+    $order = $block->getOrder();
+    $customerName = $order->getCustomerName()!='Guest' ? $order->getCustomerName() : $order->getBillingAddress()->getName();
+
+    $id = $block->getOrderId();
+    ?>
+    <div class="fieldset-wrapper-title">
+        <span class="title"><?php echo __('Send Custom Email') ?></span>
+    </div>
+    <table class="admin__table-secondary">
+        <tbody>
+        <tr>
+            <th><?php echo __('Order ID:') ?></th>
+            <td colspan="2"><?php echo $block->getOrderIncrementId(); ?>
+            </td>
+        </tr>
+        <tr>
+            <th> <?php echo __('Ordered Items: ') ?></th>
+            <td><select name="copy-item-select" id="copy-item-select" class="admin__control-select"><option value="no">Select item</option>
+            <?php foreach ($order->getAllItems() as $item){?>
+                <option value="<?=$item->getName()?>"><?=$item->getName()?></option><?php
+            } ?></select> 
+            </td>
+            <td><span id = "press-copy-item"> Select item to copy </span></td>
+         </tr>
+        <tr>
+            <th><?php echo __('Customer Email') ?></th>
+            <td><span id="showed_customer_email"><?php echo $block->escapeHtml($order->getCustomerEmail())?></span></td>
+            <td><button class ="action-default scalable edit mail_payment" title="Use alternative email" id="boton_alternative_email"> Use alternative email </button><span id="email-not-found" style = "display:none"> Email not found! </span></td>
+        </tr>
+        <tr><th><?php echo __('Template') ?></th>
+        <td colspan="2"><select id="custom-email-dropdown" class= "admin__control-select" name = "custom_email">
+                            <option value="">Select Template</option>  
+                            <option value="1">BO with ETA</option>
+                            <option value="2">BO without ETA - Cancellation </option>
+                            <option value="3">BO without ETA Cancellation - Coupon</option>
+                            <option value="4">BO without ETA - Alternative available</option>
+                            <option value="5">BO without ETA - Other items available</option>
+                            <option value="6">SOI 2-3 weeks / IM- Medplus - Medchain</option>
+                            <option value="7">SOI 2-4 weeks / MK</option>
+                            <option value="8">DROPSHIP - CELLPHONE NEEDED</option>
+                            <option value="9">DROPSHIP</option>
+                            <option value="10">DISCONTINUED - Replacement available</option>
+                            <option value="11">DISCONTINUED - Cancellation</option>
+                            <option value="12">Shortly shipment </option>
+                            <option value="13">Confirmation (SOI, BO with alternative, DBM with alternative, etc)</option>
+                            <option value="14">Negative Update</option>
+                            <option value="15">Tracking Information</option>
+                            <option value="16">Circle Email</option>
+                            <option value="17">Cancellation</option>
+                            <option value="18">Payment needed</option>
+                            <option value="19">Cancellation - Refund needed</option>
+                            <option value="20">Different Billing and Shipping Information</option>
+                            <option value="21">(Empty)</option>
+                            </select></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="admin__page-section-title">
+        <span class="title">Email Template</span>
+    </div>
+    <form id="custom-email-form">
+        <input name="form_key" type="hidden" value="<?php echo $block->formkey();?>">
+        <div class = "custom_email_input">
+            <label for="email-template" class = "admin__field-label">Subject</label>
+            <textarea name="email_subject" id="email-template-subject" cols="100" rows="1" class ="admin__control-textarea">Regarding Your Order #<?=$block->getOrderIncrementId()?></textarea>
+        </div>
+        <div class = "custom_email_input">
+            <label for="email-template" class = "admin__field-label">Message </label><button class ="action-default scalable edit mail_bold" title = "Bold" id="boton_bold_email"> B </button> <button class ="action-default scalable edit mail_italic" title = "Italic" id="boton_italic_email"> I </button> <button class ="action-default scalable edit mail_underscore" title="Underscore" id="boton_underscore_email"> U </button>
+            <textarea name="email_body" id="email-template" cols="100" rows="10" class ="admin__control-textarea">Dear <?=$customerName ?>,</textarea>
+        </div>
+        <input name = "customer_name" type="hidden" value = "<?= $customerName ?>">
+        <input name = "order_id" type="hidden" value = "<?= $id ?>">
+        <input name = "customer_email" type="hidden" id="input_costumer_email" value = "<?=$order->getCustomerEmail()?>"><span id="sendmail-button-parent"><?= $block->getChildHtml('submit_button') ?></span><button class ="action-default scalable edit secondary" type ="submit" id = "print-email-out"> Preview </button>
+        </form>
+    <div id= "email-print" style = "display:none">
+    <style>.email-container{font-family: Helvetica,Arial,sans-serif; vertical-align: top; background-color: #fff; padding: 25px; font-size: 14px; white-space: pre-wrap;} .email-image{font-family: Helvetica,Arial,sans-serif; vertical-align: top; background-color: #fff; padding: 25px; font-size: 14px} </style>
+    <div class = 'email-container'>
+    </div>
+    </div>
+    <div class="templates-main">
+    
+    <div class = "template-1">
+        <span class = "email-subject">** REPLY REQUIRED ** Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Dear <?=$customerName ?>,</p>
+
+            <p>We apologize for the inconvenience this might cause, but we must communicate to you that the item XXXXX from your order #<?=$block->getOrderIncrementId()?> entered in backorder. Our inventory was still showing in stock at the moment the order was placed, but they could not be processed since they were earmarked (pre-sold to another account). We expect availability once again by (MM/DD/YY).</p>
+
+            <p>Could you please confirm to us if you are willing to wait for the product? We would need to hear back from you within a week. Please note that your account has not been charged. However if you decide to wait we will charge it in order to guarantee manufacturer delivery.</p>
+
+            <p>We look forward to hearing back from you. Again, we are sorry about this situation.</p>
+
+            <p>Regards,<p>
+        </div>
+    </div>
+    <div class = "template-2">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Good Morning/Afternoon <?=$customerName ?>,</p>
+
+            <p>This is a courtesy email to let you know that unfortunately, at this time we cannot fulfill your order #<?=$block->getOrderIncrementId()?>. The current COVID pandemic keeps creating supply chain setbacks and products like XXXXXXXXXXXXXX become suddenly out-of-stock in our warehouses. Since at the moment we do not have an estimated time on when this shortfall will be cleared, we feel it is best to cancel this order</p>
+
+            <p>Please note, your account was NOT charged. Your financial institution should be releasing your funds back to you shortly. Further note however, that we have no control nor can we estimate how long it will be prior to your financial institution removing the hold on your funds. Banks differ considerably in this respect ranging anywhere from 2 to more than 10 business days.</p>
+
+            <p>Please let us know if you have any further questions and we will be happy to address them. Once again we're very sorry for this inconvenience.</p>
+
+            <p>Best Regards,<p>
+        </div>
+    </div>
+    <div class = "template-3">
+        <span class = "email-subject">** REPLY REQUIRED ** Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Dear <?=$customerName ?>,</p>
+
+            <p>I’m sorry to inform you, that in light of the COVID pandemic and its effects on our supply lines, we are experiencing rapid inventory depletion and continued shortages. As a result, item XXXX on your order  #<?=$block->getOrderIncrementId()?>, unfortunately, went suddenly out of stock. At this stage, the manufacturer is not providing us with a restocking date. We, therefore, cannot properly fulfill your order and have decided that is best to cancel the order. Please note, we did not charge your account so your financial institution will be releasing these funds back to you. We have no control nor can we estimate how long it will be for your financial institution to perform this release, but normally is no more than 5 days.</p>
+
+            <p>We understand this news will be disappointing to you. However, in the spirit of good service and as a minor gesture to somehow ameliorate this inconvenience, we wish to offer you a $5 OFF coupon on your next purchase. To redeem it please use code XXXX.</p>
+            <p>We really appreciate your understanding and hope to be of service in the near future.</p>
+
+            <p>Kind Regards,<p>
+        </div>
+    </div>
+    <div class = "template-4">
+        <span class = "email-subject">** REPLY REQUIRED ** Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Dear <?=$customerName ?>,</p>
+
+            <p>We apologize for the inconvenience this might cause, but we must communicate to you that your item XXXX from your order entered in backorder. There is usually stock in most codes, but at times we get more demand than foreseen creating this uncomfortable situation. Unfortunately, at this time we don't have any restocking date from the manufacturer.</p>
+
+            <p>Our intention is to provide you with the best service so we would understand if this doesn't work for you. Also, we recommend an alternative item which is </p>
+            <p>If you would like to receive the alternative item or if you would rather cancel your order, just give us a call at 1 (888) 792-3747 or email us, we'll oblige accordingly.</p>
+
+            <p>Again, I'm very sorry for this inconvenience.</p>
+
+            <p>Kind Regards,<p>
+        </div>
+    </div>
+    <div class = "template-5">
+        <span class = "email-subject">** REPLY REQUIRED ** Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Dear <?=$customerName ?>,</p>
+
+            <p>We apologize for the inconvenience this might cause, but we must communicate to you that your item XXXX from your order #<?=$block->getOrderIncrementId()?> entered in backorder. There is usually stock in most codes, but at times we get more demand than foreseen creating this uncomfortable situation. Unfortunately, at this time we don't have any restocking date from the manufacturer.</p>
+
+            <p>Our intention is to provide you with the best service so we would understand if this doesn't work for you.</p>
+
+            <p>Please let us know whether you would like to receive the remaining items or whether you would like to cancel your order.</p>
+
+            <p>Again, I'm very sorry for this inconvenience.</p>
+
+            <p>Kind Regards,<p>
+        </div>
+    </div>
+    <div class = "template-6">
+        <span class = "email-subject">** REPLY REQUIRED ** Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Dear <?=$customerName ?>,</p>
+
+            <p>The item XXXX on your order is a Special Order item that ships directly from the manufacturer. Although the item is available, it has an expected lead time of 2-3 weeks before shipping.</p>
+
+            <p>Please let us know either replying to this email or calling our Customer Service team at 1 (888) 801-4801 whether you would like to wait or cancel your order.</p>
+
+            <p>Also, we will like to let you know that your account has not been charged. However if you decide to wait we will charge it in order to guarantee manufacturer delivery. </p>
+
+            <p>Best Regards,<p>
+        </div>
+    </div>
+    <div class = "template-7">
+        <span class = "email-subject">** REPLY REQUIRED ** Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Dear <?=$customerName ?>,</p>
+
+            <p>The item XXXX on your order is a Special Order item that ships directly from the manufacturer. Although the item is available, it has an expected lead time of 2-4 weeks before shipping.</p>
+
+            <p>Please let us know either replying to this email or calling our Customer Service team at 1 (888) 801-4801 whether you would like to wait or cancel your order.</p>
+
+            <p>Also, we will like to let you know that your account has not been charged. However if you decide to wait we will charge it in order to guarantee manufacturer delivery.</p>
+
+            <p>Best Regards,<p>
+        </div>
+    </div>
+    <div class = "template-8">
+        <span class = "email-subject">** REPLY REQUIRED ** Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Good Morning,</p>
+
+            <p>This is a courtesy email to let you know that your XXXX from your order is a special order item that ships directly from the manufacturer. Although the item is available, it takes a few days to have it ready to ship. Also, we'll need your contact number in order to proceed.</p>
+
+            <p>Best Regards,<p>
+        </div>
+    </div>
+    <div class = "template-9">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+            <p>Dear <?=$customerName ?>,</p>
+
+            <p>This is a courtesy email to let you know that your item xx  from your order is a special order item that ships directly from the manufacturer. Although the item is available, it takes a few days to have it ready to ship.</p>
+
+            <p>It has a considerable lead time expected to last 5 to 7 business days before shipping and you will receive an email notification as soon as tracking info is available.</p>
+
+            <p>Let me know if you have any further questions and I will be happy to address them.</p>
+
+            <p>Best regards.</p>
+        </div>
+        <div class = "template-10">
+        <span class = "email-subject">** REPLY REQUIRED ** Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Dear <?=$customerName ?>,</p>
+
+        <p>I’m very sorry about this situation but I am writing to communicate to you that we will not be able to fulfill your order for item XXXX. Our inventory was still showing in stock at the moment of placing the order, but they could not be processed since they were earmarked (pre-sold to another account). I checked for new orders and we have none pending as the manufacturer has decided to no longer carry this product (item discontinued). A change has been made to our site to reflect this.</p>
+
+        <p>Our intention is to provide you with the best service so we would understand if this doesn't work for you. Also, the manufacturer recommended a replacement item which is XXXX</p>
+
+        <p>If you would like to receive the alternative item or if you would rather cancel your order, just give us a call at 1 (888) 792-3747 or email us, we'll oblige accordingly.</p>
+
+        <p>We truly apologize for the inconvenience this might have caused you.</p>
+
+        <p>Kind Regards,<p>
+        </div>
+    </div>
+    <div class = "template-11">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Dear <?=$customerName ?>,</p>
+
+        <p>I’m very sorry about this situation but I am writing to communicate to you that we will not be able to fulfill your order for item xx. Our inventory was still showing in stock at the moment of placing the order, but they could not be processed since they were earmarked (pre-sold to another account). I checked for new orders and we have none pending as the manufacturer has decided to no longer carry this product (item discontinued without replacement). A change has been made to our site to reflect this.</p>
+
+        <p>Please note that we haven't charged your account, we have no control nor can we estimate how long it will be for your financial institution to release the funds. Banks differ considerably in this respect and it might take from 5 to more than 10 business days before the funds reach your account. Please let us know if you have any further questions and we will be happy to address them.</p>
+
+        <p>We are very sorry for the inconvenience. Please take care of yourself and follow health guidelines.</p>
+
+        <p>Kind Regards, <p>
+        </div>
+    </div>
+    <div class = "template-12">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Dear <?=$customerName ?>,</p>
+
+        <p>We are very sorry for the delay in processing your order #<?=$block->getOrderIncrementId()?>. In light of the current crisis, we have been overwhelmed with orders and we have been understaffed as some employees have voluntarily quarantined. As a result, our response times have increased considerably. We are trying our best to cope with the situation and complete all orders as fast as possible. Your items are in stock so they should be shipping shortly.</p>
+
+        <p>We kindly ask for your understanding and again truly apologize for this inconvenience. We hope you and your family are staying healthy.</p>
+
+        <p>Kind regards. <p>
+        </div>
+    </div>
+    <div class = "template-13">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Dear <?=$customerName ?>,</p>
+
+        <p>Thanks for your reply. Your order is now being processed and you will receive an email notification with your tracking info as soon as it is available.</p>
+
+        <p>Please let me know if you have any questions or concerns and I will be happy to address them.</p>
+        </div>
+    </div>
+    <div class = "template-14">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Dear <?=$customerName ?>,</p>
+
+        <p>Unfortunately, we haven't received any ETA for the item of your order.</p>
+
+        <p>We are truly sorry for this inconvenience.</p>
+
+        <p>Best Regards,</p>
+        </div>
+        <div class = "template-15">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Good Morning <?=$customerName ?>,</p>
+
+        <p>Below you will find the tracking information for your order #<?=$block->getOrderIncrementId()?>.</p>
+
+        <p>Your order shipped with FedEx Tracking Number XXXXXXX. Click <a href="http://yourlink.com">HERE</a> for more information.</p>
+
+        <p>Please feel free to contact us if you have any questions or concerns.</p>
+
+        <p>Best regards</p>
+        </div>
+    </div>
+    <div class = "template-16">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p> Hello <?=$customerName ?>,</p>
+
+        <p>We would like to circle back to this email to let you know that we are still waiting for your response. Could you please let us know if you would like to receive any of the alternative options we provided (you can check them below) on our last email? Or if you would rather cancel the order, please reply to this email or call to our Customer Service team at 1 (855) 828-1444.</p>
+
+        <p>Also, we will like to let you know that your account has not been charged. However if you decide to wait we will charge it in order to guarantee manufacturer delivery.</p>
+
+        <p>Could you please confirm to us if you are willing to wait for the product? We would need to hear back from you before Friday.</p>
+
+        <p>Kind regards.</p>
+        </div>
+    </div>
+    <div class = "template-17">
+        <span class = "email-subject">Regarding your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Dear <?=$customerName ?>,</p>
+
+        <p>As requested your order #<?=$block->getOrderIncrementId()?> has been canceled. Please note that we haven't charged your account, we have no control nor can we estimate how long it will be for your financial institution to release the funds. Banks differ considerably in this respect and it might take from 5 to more than 10 business days before the funds reach your account.</p>
+
+        <p>Please let us know if you have any further questions and we will be happy to address them.</p>
+
+        <p>Best regards,</p>
+        </div>
+    </div>
+    <div class = "template-18">
+        <span class = "email-subject">Payment of your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Good Afternoon <?=$customerName ?>,</p>
+
+        <p>We are writing to you in regards to Order #<?=$block->getOrderIncrementId()?> for the amount of $XXXX placed with us on MM/DD/YY. Though we already shipped the full order, we never received payment for it as we missed the payment period.</p>
+
+        <p>You may verify this with your issuing bank. Since we don't keep our clients financial data when an order is placed, we kindly request that you contact us with the credit card information to process payment for this order.</p>
+
+        <p>Please get in contact with us as soon as possible.</p>
+
+        <p>We do apologize for this inconvenience.</p>
+
+        <p>Best regards.</p>
+        </div>
+    </div>
+    <div class = "template-19">
+        <span class = "email-subject">Regarding Your Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Good Afternoon <?=$customerName ?>,</p>
+
+        <p>This is a courtesy email to let you know that unfortunately, at this time we will not be able to fulfill your order #<?=$block->getOrderIncrementId()?> for the item XXXXXXX. The product is currently on backorder and unfortunately, we don't know when it'll be available again.</p>
+
+        <p>As far as your payment, your full refund has already been requested. Please note that a refund is a two-step process involving us and your bank. You will receive an email notification from us as soon as we finalize "our" part. Please note that we have no control nor can we estimate how long it will be for your financial institution to perform its end. Banks differ considerably in this respect and it might take from 5 to more than 10 business days before the funds reach your account.</p>
+
+        <p>Please let us know if you have any further questions and we will be happy to address them.</p>
+
+        <p>Best Regards,</p>
+        </div>
+    </div>
+    <div class = "template-20">
+        <span class = "email-subject">*ATTENTION REQUIRED* Payment Alert for Order #<?=$block->getOrderIncrementId()?></span>
+        <div class ="email-message">
+        <p>Dear <?=$customerName ?>,</p>
+
+        <p>We are writing to you in regards to your order #<?=$block->getOrderIncrementId()?> placed with us on MM/DD/YY. We are ready to process your order. However, our system detected a mismatch between the billing and shipping address and also that is your first purchase with us. As a result, it activated an alert in our anti-fraud system. </p>
+
+        <p>Per company policy in light of increased online fraudulent activity, we must ask that you please process payment through one of the methods below. Please note, your credit card was NOT charged.</p>
+
+        <p> • Via PayPal: No PayPal account is required. We will send you a PayPal link. -
+            • Check/Money Order:</p>
+
+        <p>PAYABLE TO: 
+        SB MEDICAL
+        11867 SW 151 PL
+        Miami, FL 33196</p>
+
+        <p>• Via Bank Transfer: (Please write as shown)
+        Account Name: SB Medical
+        Bank: Bank of America
+        Address: 701 Brickell Ave, 1st Flr, Miami, FL 33131
+        AC# 8980 65389 156
+        Routing #:063100277
+        SWIFT: BOFAUS3N</p>
+
+        <p>As stated above, we didn't make any charge to your account. The funds you committed to us when paying online have already been released back to you. We will proceed with your order as soon as you process payment through any of the options provided.  Your old order has been cancelled and a new one will be created once payment is complete. </p>
+        </div>
+    </div>
+    <div class = "template-21">
+        <span class = "email-subject"></span>
+        <div class ="email-message">
+        <p>Dear <?=$customerName ?>,</p>
+        <p>Best Regards,</p>
+        </div>
+    </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Sbmedical_Comparator::css/cb.css" />
+        <script src="Sbmedical_Comparator::js/cb.js" />
+    </head>
+    <body>
+        <referenceContainer name="before.body.end">
+			<block class="Magento\Framework\View\Element\Template" name="comparator_bar" template="Sbmedical_Comparator::comparator-bar.phtml" />
+		</referenceContainer>
+    </body>
+</page>

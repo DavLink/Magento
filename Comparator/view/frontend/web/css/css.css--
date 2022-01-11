@@ -1,0 +1,111 @@
+.top-link, .top-link:hover{
+    cursor: pointer;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 4px;
+    line-height: 33px;
+}
+.main-content.empty{
+    font-size: 17px;
+    text-decoration: none;
+    width: 280px;
+    text-align: center;
+    margin: 50px auto;
+}
+@media print{
+    body * 
+    { 
+        visibility: hidden; 
+    }
+    .printable * { 
+        visibility: visible; 
+    }
+    .hide-row-button, .product-add-to-cart, .remove-button-A, .remove-button-B{
+        visibility: hidden;
+    }
+    .printable {
+        position: absolute; 
+        top: 40px; 
+        left: 30px; 
+    }
+}
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+@media only screen and (min-width: 1023px) {
+  .main-container-comparator {
+      padding: 15px 70px 40px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .main-container-comparator {
+      padding-bottom: 30px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+    .main-content.printable{
+        overflow: auto;
+    }   
+    .main-container-comparator > div > .main-content.printable > table > tbody > tr > td{
+        display: table-cell !important;
+    }
+}
+
+
+/* Page Text */
+    .main-container-comparator h1 {
+        height: 50px;
+        line-height: 50px;
+        color: #4D4D4D;
+        padding-left: 73px;
+        text-align: left;
+        font-weight: 500;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        margin: 0 0 5px 0;
+    }
+    .main-container-comparator ul {
+        margin: 0 0 0 73px;
+        padding: 20px 0;
+    }
+    .main-container-comparator ul li {
+        color: #555;
+        font-size: 15px;
+        font-family: Arial, Helvetica, sans-serif;
+        padding-bottom: 20px;
+        margin: 0;
+        list-style: none;
+        position: relative;
+    }
+    .main-container-comparator ul li p { margin: 0; }
+    .main-container-comparator ul li strong { color: #4D4D4D; }
+    .main-container-comparator ul li:last-child{
+        padding-bottom: 0;
+    }
+    .main-container-comparator ul li:before {
+        position: absolute;
+        left: -53px;
+        top: 5px;
+    }
+    .main-container-comparator ul li:nth-child(1):before {
+        content: url("images/info.png");
+    }
+    .main-container-comparator ul li:nth-child(2):before {
+        content: url("images/gear.png");
+    }
+    .main-container-comparator ul li:nth-child(3):before {
+        content: url("images/dir.png");
+    }
+
+@media only screen and (max-width: 1023px) {
+    .main-container-comparator h1 {
+        padding-left: 0;
+        font-size: 16px;
+        font-weight: bold;
+        height: auto;
+        text-align: center;
+        line-height: 25px;
+    }
+}

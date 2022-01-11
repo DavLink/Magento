@@ -1,0 +1,38 @@
+require([
+    'jquery',
+    'jquery/ui',
+    'mage/url',
+    'jquery/jquery.cookie'
+], function ($) {
+    var a = 0;
+    $('.hide-row').on('click', function() {
+        $(this).parent().hide();
+        a = a + 1;
+        $('.features-row').show();
+        $('.hidden-features').text(a + ' hidden feature(s)');
+    });
+    $('.showall-row').on('click', function() {
+        $('.hide-row').parent().show();
+        a = 0;
+        $('.features-row').hide();
+    });
+    $('.remove-button-A').on('click', function() {
+        $.cookie('Product-A', null, { path: '/' });
+        window.history.go(-1);
+    });
+    $('.remove-button-B').on('click', function() {
+        $.cookie('Product-B', null, { path: '/' });
+        window.history.go(-1);
+    });
+    $('.remove-all-items-button').on('click', function() {
+        $.cookie('Product-A', null, { path: '/' });
+        $.cookie('Product-B', null, { path: '/' });
+        window.history.go(-1);
+    });
+    $('.print-comparison-table').on('click', function() {
+        window.print();
+    });
+    $('.goback-button').on('click', function() {
+        window.history.go(-1);
+    });    
+});

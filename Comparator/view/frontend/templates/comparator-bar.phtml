@@ -1,0 +1,127 @@
+<?php
+
+function console_log( $data ){
+    echo '<script>';
+    echo 'console.log('. json_encode( $data ) .')';
+    echo '</script>';
+  }
+
+    $productAid = 0;
+    $productBid = 0;
+    $productBlock= $block->getLayout()->createBlock('Sbmedical\Comparator\Block\Product');
+    $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+
+    if (isset($_COOKIE["Product-A"])){
+        $productAid = htmlspecialchars($_COOKIE["Product-A"]);
+        $_productA = $productBlock->getProduct($productAid);
+        $productImageA = $imageHelper->init($_productA, 'category_page_list')->getUrl();
+    }
+    
+    if (isset($_COOKIE["Product-B"])){
+        $productBid = htmlspecialchars($_COOKIE["Product-B"]);
+        $_productB = $productBlock->getProduct($productBid);
+        $productImageB = $imageHelper->init($_productB, 'category_page_list')->getUrl();
+    }
+
+?>
+<div class = "comparator-main">
+    <div class = "comparator-main-container"
+        <?php if ($productAid == 0 && $productBid == 0){ ?>
+            style = "display: none"
+        <?php } ?>> 
+        <div class = "comparator-container">
+            <div class = "compare-tray">
+                <div class = "compare-title">
+                    <p>Compare products</p>
+                    <div class="toggle-compare-v">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="presentation" class="togle-compare-v-icon" aria-hidden="true">
+                        <path d="M12 8a.997.997 0 00-.702.288l-5.005 5.005a1 1 0 001.414 1.414L12 10.415l4.295 4.295a1 1 0 001.412-1.417l-4.98-4.98A.997.997 0 0012 8z"></path>
+                    </svg>
+                    </div>
+                </div>
+            </div>
+            <div class = "compared-products">
+                <ul class = "cp-ul">
+                    <li <?= ($productAid == 0) ? "class = 'compared-product-container product_a off'" : "class = 'compared-product-container product_a'" ?>
+                        >
+                        <div class ="container-whole-product">
+                            <div class= "image-compared-product">
+                            <?php if ($productAid != 0){ ?>
+                                <a href="<?php echo $_productA->getProductUrl() ?>" class="product-compare-link"><img class = "product-compare-image" src="<?=$productImageA?>" alt="Product A to compare"></a>
+                            <?php } else{ ?>
+                                <a class = "product-compare-link"><img class = "product-compare-image" alt="Product A to compare"></a>
+                            <?php } ?>
+                            </div>
+                            <div class = "description-compared-product"> 
+                                <?php if ($productAid != 0){ ?>
+                                <div class = "description-compared-product-text">
+                                    <?php echo $_productA->getName(); ?>
+                                </div>
+                                <div class = "price-compared-product-text">
+                                    <?php echo "$". $_productA->getPriceInfo()->getPrice('final_price')->getAmount(); ?>
+                                </div>
+                                <div class = "soldby-compared-product-text">
+                                <?php echo (!empty($_productA->getData('sold_by'))) ? 'Sold By: ' : '';
+                                echo (!empty($_productA->getData('sold_by'))) ? $_productA->getData('sold_by') : '-';?>
+                                </div>
+                                <?php } else{ ?>
+                                <div class = "description-compared-product-text"></div>
+                                <div class = "price-compared-product-text"></div>
+                                <div class = "soldby-compared-product-text"></div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class = "remove-button-x">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="presentation" class="remove-button-x-icon" aria-hidden="true">
+                                <path d="M13.415 12.006l5.295-5.292a1 1 0 00-1.414-1.415L12 10.591 6.71 5.296A1 1 0 005.295 6.71l5.292 5.295-5.295 5.292a1 1 0 101.414 1.414l5.295-5.292 5.292 5.295a1 1 0 001.414-1.414l-5.292-5.294z"></path>
+                            </svg>
+                        </div>
+                    </li>
+                    <li <?= ($productBid == 0) ? "class = 'compared-product-container product_b off'" : "class = 'compared-product-container product_b'" ?>
+                        >
+                        <div class ="container-whole-product">
+                            <div class= "image-compared-product">
+                            <?php if ($productBid != 0){ ?>
+                                <a href="<?php echo $_productB->getProductUrl() ?>" class="product-compare-link"><img class = "product-compare-image" src="<?=$productImageB?>" alt="Product B to compare"></a>
+                            <?php } else{ ?>
+                                <a class = "product-compare-link"><img class = "product-compare-image" alt="Product B to compare"></a>
+                            <?php } ?>
+                            </div>
+                            <div class = "description-compared-product"> 
+                                <?php if ($productBid != 0){ ?>
+                                <div class = "description-compared-product-text">
+                                    <?php echo $_productB->getName(); ?>
+                                </div>
+                                <div class = "price-compared-product-text">
+                                    <?php echo "$". $_productB->getPriceInfo()->getPrice('final_price')->getAmount(); ?>
+                                </div>
+                                <div class = "soldby-compared-product-text">
+                                <?php echo (!empty($_productB->getData('sold_by'))) ? 'Sold By: ' : '';
+                                echo (!empty($_productB->getData('sold_by'))) ? $_productB->getData('sold_by') : '-';?>
+                                </div>
+                                <?php } else{ ?>
+                                <div class = "description-compared-product-text"></div>
+                                <div class = "price-compared-product-text"></div>
+                                <div class = "soldby-compared-product-text"></div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class = "remove-button-x">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="presentation" class="remove-button-x-icon" aria-hidden="true">
+                                <path d="M13.415 12.006l5.295-5.292a1 1 0 00-1.414-1.415L12 10.591 6.71 5.296A1 1 0 005.295 6.71l5.292 5.295-5.295 5.292a1 1 0 101.414 1.414l5.295-5.292 5.292 5.295a1 1 0 001.414-1.414l-5.292-5.294z"></path>
+                            </svg>
+                        </div>
+                    </li>
+                </ul>
+                <div class = "compare-page">
+                    <div type = "button" class = "compare-page-button">
+                        <a class= "action primary tocart compare-page-button-text" href='/compare-products'>Compare</a>
+                    </div>
+                    <div class= "remove-page-button">
+                        <a class= "remove-page-button-text">Remove All</a>
+                    </div>       
+                </div>   
+            </div>
+        </div>
+    </div>
+</div>

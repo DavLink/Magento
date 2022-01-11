@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="custom_email"
+              label="custom_email"
+              file="custom_email.html" type="html"
+              module="Sbmedical_EmailTemplates" area="adminhtml"/>
+</config>

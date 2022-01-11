@@ -1,0 +1,27 @@
+{
+    "name": "sbmedical/exportcustomcolumn",
+    "description": "Export Custom columns to xml and csv",
+    "require": {
+        "php": ">=7.1",
+        "magento/framework": ">=101"
+    },
+    "authors": [
+        {
+            "name": "Cesar Barrios (Dave)",
+            "email": "davega066@gmail.com"
+        }
+    ],
+    "type": "magento2-module",
+    "version": "1.0.4",
+    "license": [
+        "MIT"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Sbmedical\\ExportCustomColumn\\": ""
+        }
+    }
+}

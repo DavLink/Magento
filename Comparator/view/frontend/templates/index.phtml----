@@ -1,0 +1,204 @@
+<div class="main-container-comparator">
+<?php
+    $productAid = $productBid = 0;
+    if (isset($_COOKIE["Product-A"])){
+        $productAid = htmlspecialchars($_COOKIE["Product-A"]);
+    }
+    
+    if (isset($_COOKIE["Product-B"])){
+        $productBid = htmlspecialchars($_COOKIE["Product-B"]);
+    }
+    
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+    $_productA = $objectManager->create('Magento\Catalog\Model\Product')->load($productAid);
+    $_productB = $objectManager->create('Magento\Catalog\Model\Product')->load($productBid);
+?>
+    <h1>Compare Products</h1>
+    <div class="top-container">
+        <div>
+            <a class="top-link goback-button">< Back to previous page</a>
+        </div>
+        <div>
+            <a class="top-link remove-all-items-button">x Remove all items</a>
+        </div>
+        <div>
+            <a class="top-link print-comparison-table" type="button" >Print page</a>
+        </div>
+    <?php if ($productAid == 0 or $productBid == 0){ ?>
+        <div class="main-content empty">
+            <span>You have no items to compare</span>
+        </div>
+    <?php } else{ ?>
+    <div class="main-content printable">
+        <table class="comparison-table">
+            <thead>
+                <tr class="product-pair name">
+                    <td></td>
+                    <?php
+                    $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+                    $productImageA = $imageHelper->init($_productA, 'category_page_list')->getUrl();
+                    $productImageB = $imageHelper->init($_productB, 'category_page_list')->getUrl();
+                    ?>
+                    <td><a href="<?php echo $_productA->getProductUrl() ?>" class="product-url"><img src="<?=$productImageA?>" alt="<?php echo $_productA->getName() . " Image";  ?>"></a></td>
+                    <td><a href="<?php echo $_productB->getProductUrl() ?>" class="product-url"><img src="<?=$productImageB?>" alt="<?php echo $_productB->getName() . " Image";  ?>"></a></td>
+                </tr>
+                <tr class="product-pair description">
+                    <td></td>
+                    <td class="product-description">
+                        <div class="product-description-link">
+                            <?php echo $_productA->getName();?>
+                        </div>
+                    </td>
+                    <td class="product-description">
+                        <div class="product-description-link">
+                            <?php echo $_productB->getName();?>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="product-pair prices">
+                    <td></td>
+                    <td><?php echo "$". $_productA->getPriceInfo()->getPrice('final_price')->getAmount(); ?></td>
+                    <td><?php echo "$". $_productB->getPriceInfo()->getPrice('final_price')->getAmount(); ?></td>
+                </tr>
+                <tr class="product-pair cart-buttons">
+                    <td></td>
+                    <td><a class="product-add-to-cart action primary tocart" href="<?php echo $_productA->getProductUrl(); ?>">Add to cart</a></td>
+                    <td><a class="product-add-to-cart action primary tocart" href="<?php echo $_productB->getProductUrl(); ?>">Add to cart</a></td>
+                </tr>
+                <tr class="product-pair remove-buttons">
+                    <td></td>
+                    <td><button type="button" class="remove-button-A">Remove</button></td>
+                    <td><button type="button" class="remove-button-B">Remove</button></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="features-row" style="display:none; border-bottom: 0.1rem #ccc8c8 solid">
+                <td></td><td></td><td class= "hidden-features"></td>
+                <td class="showall-row"><a  class="show-row-button" style = "cursor:pointer">Show</a></td>
+                </tr>
+                <tr>
+                    <th>Manufacturer</th>
+                    <td class="product-manufacturer">
+                        <div>
+                        <?php echo $_productA->getAttributeText('manufacturer'); ?>
+                        </div>
+                    </td>
+                    <td class="product-manufacturer">
+                        <div>
+                        <?php echo $_productB->getAttributeText('manufacturer'); ?>
+                        </div>
+                    </td>
+                    <td class="hide-row"><button type="button" class="hide-row-button">Hide</button></td>
+                </tr>
+                <tr>
+                    <th>Sold by</th>
+                    <td class="compare sold-by">
+                        <div>
+                            <?php echo (!empty($_productA->getData('sold_by'))) ? $_productA->getData('sold_by') : '-';?>
+                        </div>
+                    </td>
+                    <td class="compare sold-by">
+                        <div>
+                            <?php echo (!empty($_productB->getData('sold_by'))) ? $_productB->getData('sold_by') : '-';?>
+                        </div>
+                    </td>
+                    <td class="hide-row"><button type="button" class="hide-row-button">Hide</button></td>
+                </tr>
+                <tr>
+                    <th>Code</th>
+                    <td class="compare product-code">
+                        <div>
+                            <?php echo (!empty($_productA->getSku())) ? $_productA->getSku() : '-';?>
+                        </div>
+                    </td>
+                    <td class="compare product-code">
+                        <div>
+                            <?php echo (!empty($_productB->getSku())) ? $_productB->getSku() : '-';?>
+                        </div>
+                    </td>
+                    <td class="hide-row"><button type="button" class="hide-row-button">Hide</button></td>
+                </tr>
+                <tr>
+                <th>Product Size</th>
+                    <td class="compare product-size">
+                        <div>
+                            <?php echo (!empty($_productA->getData('product_size'))) ? $_productA->getData('product_size') : '-';?>
+                        </div>
+                    </td>
+                    <td class="compare product-size">
+                        <div>
+                            <?php echo (!empty($_productB->getData('product_size'))) ? $_productB->getData('product_size') : '-';?>
+                        </div>
+                    </td>
+                    <td class="hide-row"><button type="button" class="hide-row-button">Hide</button></td>
+                </tr>
+                <tr>
+                    <th>Product Color</th>
+                    <td class="yVg3v1LzHVLWM95GObtXx">
+                        <div>
+                        <?php echo (!empty($_productA->getData('product_color'))) ? $_productA->getData('product_color') : '-';?>
+                        </div>
+                    </td>
+                    <td class="yVg3v1LzHVLWM95GObtXx">
+                        <div>
+                        <?php echo (!empty($_productB->getData('product_color'))) ? $_productB->getData('product_color') : '-';?>
+                        </div>
+                    </td>
+                    <td class="hide-row"><button type="button" class="hide-row-button">Hide</button></td>
+                </tr>
+                <tr>
+                    <th>Require Prescription?</th>
+                    <td class="compare require-prescription">
+                        <div>
+                        <?php echo (!empty($_productA->getData('require_prescription'))) ? $_productA->getData('require_prescription') : '-';?>
+                        </div>
+                    </td>
+                    <td class="compare require-prescription">
+                        <div>
+                        <?php echo (!empty($_productB->getData('require_prescription'))) ? $_productB->getData('require_prescription') : '-';?>
+                        </div>
+                    </td>
+                    <td class="hide-row"><button type="button" class="hide-row-button">Hide</button></td>
+                </tr>
+                <tr>
+                    <th>Has free shipping?</th>
+                    <td class="compare free-shipping">
+                        <div>
+                        <?php 
+                        if (!empty($_productA->getfreeShippingValue()))
+                        {
+                            echo $_productA->getfreeShippingValue();
+                        }
+                        else if (!empty($_productA->getData('shipping_promo'))){
+                            echo $_productA->getData('shipping_promo');
+                        }
+                        else{
+                            echo "-";
+                        }
+                        ?>
+                        </div>
+                    </td>
+                    <td class="compare free-shipping">
+                        <div>
+                        <?php 
+                        if (!empty($_productB->getfreeShippingValue()))
+                        {
+                            echo $_productB->getfreeShippingValue();
+                        }
+                        else if (!empty($_productB->getData('shipping_promo'))){
+                            echo $_productB->getData('shipping_promo');
+                        }
+                        else{
+                            echo "-";
+                        }
+                        ?>
+                        </div>
+                    </td>
+                    <td class="hide-row"><button type="button" class="hide-row-button">Hide</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <?php } ?>
+</div>

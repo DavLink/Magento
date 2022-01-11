@@ -1,0 +1,38 @@
+.status-drop-form{
+    display: inline;
+}
+#order_status_dropdown{
+    display: none;
+}
+#cancel_edit_order_status{
+    padding: 0px 7px;  
+    font-size: 1.3 rem; 
+    display:none;
+    cursor: pointer;
+}
+#edit_order_status{
+    padding: 0px 7px;  
+    font-size: 1.3 rem;
+    cursor: pointer;
+}
+.templates-main{
+    display:none;
+}
+.mail_bold{
+    font-weight: 700;
+}
+.mail_underscore{
+    text-decoration: underline;
+}
+.mail_italic{
+    font-style: italic;
+}
+.mail_bold, .mail_underscore, .mail_italic{
+    padding: 0 0.5rem;
+}
+#boton_alternative_email, #press-copy-item, #email-not-found{
+    white-space: nowrap;
+}
+#copy-item-select{
+    width: 400px;
+}
